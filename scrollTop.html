@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #top {
+            width: 30px;
+            height: 30px;
+            background: lightblue;
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        for(var i = 0; i < 100;i++) {
+            document.write("<h1>" + i + "</h1>");
+        }
+    </script>
+    <div id="top"></div>
+</body>
+<script>
+    window.onload = function(){
+
+        // 找到top元素
+
+        var top = document.getElementById("top");
+
+        // 声明控制滚动速度的变量
+
+        var speed;
+
+        // 判断是滚动的高是否是0；则隐藏top
+
+        if(document.documentElement.scrollTop || document.body.scrollTop == 0) top.style.display = "none";
+
+        // 滚动条滚动事件
+
+        window.onscroll = function(){
+
+            // 声明已滚动的高是多少
+
+            var st = document.documentElement.scrollTop || document.body.scrollTop;
+
+            // 如果滚动的高>100显示top，则隐藏
+
+            top.style.display = (st > 100) ? "block" : "none" ;
+
+        }
+
+        // 实现加速滚动的函数
+
+        function autoScrollTop(){
+
+            // 每滚动一次获取滚动的高
+
+            var st = document.documentElement.scrollTop || document.body.scrollTop;
+
+            // st > 0 的时候执行
+
+            if(st > 0) {
+
+                // 将滚动条像上滚动
+
+                document.documentElement.scrollTop = document.body.scrollTop = st - speed;
+
+                // 增加步长，实现加速的效果
+
+                speed += 5; 
+
+                // 10毫秒执行此函数
+
+                setTimeout(autoScrollTop,10);
+
+            }
+
+        }
+
+        top.onclick = function() {
+
+            // 设置步长的初始值
+
+            speed = 10; 
+
+            // 调用函数，开始滚动
+
+            autoScrollTop();
+
+        }
+
+        // 方法二
+
+        // var top = document.getElementById("top");
+
+        // var st = document.documentElement.scrollTop || document.body.scrollTop;
+
+        // var timer = null;
+
+        // st == 0 ? top.style.display = "none" : top.style.display = "block";
+
+        // window.onscroll = function(){
+
+        //     st = document.documentElement.scrollTop || document.body.scrollTop;
+
+        //     st > 200 ? top.style.display = "block" : top.style.display = "none";
+
+        // }
+
+        // top.onclick = function(){
+
+        //     timer = setInterval(function(){               
+
+        //         (document.documentElement.scrollTop -= 100) || (document.body.scrollTop -= 100);
+
+        //         if(st == 0) clearInterval(timer);
+
+        //     },10)
+
+        // }
+
+
+    }
+</script>
+</html>
